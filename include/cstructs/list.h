@@ -18,10 +18,12 @@ typedef struct {
 /* Initialise an empty list for elements of `elem_size` bytes. */
 void list_init(list *l, size_t elem_size);
 
-/* Prepend a copy of `*elem` to the front of the list. Returns 0 on success, -1 on allocation failure. */
+/* Prepend a copy of `*elem` to the front of the list. Returns 0 on success, -1 on allocation
+ * failure. */
 int list_prepend(list *l, const void *elem);
 
-/* Append a copy of `*elem` to the back of the list. Returns 0 on success, -1 on allocation failure. */
+/* Append a copy of `*elem` to the back of the list. Returns 0 on success, -1 on allocation failure.
+ */
 int list_append(list *l, const void *elem);
 
 /* Remove and return the first element. Behaviour is undefined if `list_len(l) == 0`. */

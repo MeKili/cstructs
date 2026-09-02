@@ -10,7 +10,8 @@ int main(void) {
         string_builder sb;
         string_builder_init(&sb);
         assert(string_builder_len(&sb) == 0);
-        assert(string_builder_data(&sb) == NULL || string_builder_data(&sb)[0] == '\0' || string_builder_len(&sb) == 0);
+        assert(string_builder_data(&sb) == NULL || string_builder_data(&sb)[0] == '\0' ||
+               string_builder_len(&sb) == 0);
         string_builder_free(&sb);
         assert(string_builder_len(&sb) == 0);
     }

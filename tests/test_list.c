@@ -2,8 +2,7 @@
 #include <assert.h>
 #include <stdio.h>
 
-int main(void)
-{
+int main(void) {
     /* Test empty list initialization. */
     {
         list l;

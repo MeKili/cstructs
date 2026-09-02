@@ -30,13 +30,9 @@ void stack_pop(stack *s, void *out) {
     memcpy(out, s->data + s->len * s->elem_size, s->elem_size);
 }
 
-void *stack_top(const stack *s) {
-    return s->data + (s->len - 1) * s->elem_size;
-}
+void *stack_top(const stack *s) { return s->data + (s->len - 1) * s->elem_size; }
 
-size_t stack_len(const stack *s) {
-    return s->len;
-}
+size_t stack_len(const stack *s) { return s->len; }
 
 void stack_free(stack *s) {
     free(s->data);

@@ -5,8 +5,7 @@
 #define INITIAL_BUCKETS 16
 
 /* Simple FNV-1a hash function. */
-static size_t hash_key(const char *key)
-{
+static size_t hash_key(const char *key) {
     size_t hash = 2166136261u;
     for (const unsigned char *p = (const unsigned char *)key; *p; p++) {
         hash ^= *p;
@@ -16,8 +15,7 @@ static size_t hash_key(const char *key)
 }
 
 /* Ensure buckets are allocated (lazy allocation). */
-static int ensure_buckets(hashmap *hm)
-{
+static int ensure_buckets(hashmap *hm) {
     if (hm->buckets)
         return 0;
 
@@ -26,16 +24,14 @@ static int ensure_buckets(hashmap *hm)
     return hm->buckets ? 0 : -1;
 }
 
-void hashmap_init(hashmap *hm, size_t elem_size)
-{
+void hashmap_init(hashmap *hm, size_t elem_size) {
     hm->buckets = NULL;
     hm->buckets_count = 0;
     hm->elem_size = elem_size;
     hm->count = 0;
 }
 
-int hashmap_set(hashmap *hm, const char *key, const void *value)
-{
+int hashmap_set(hashmap *hm, const char *key, const void *value) {
     if (ensure_buckets(hm) != 0)
         return -1;
 
@@ -77,8 +73,7 @@ int hashmap_set(hashmap *hm, const char *key, const void *value)
     return 0;
 }
 
-int hashmap_get(const hashmap *hm, const char *key, void *out)
-{
+int hashmap_get(const hashmap *hm, const char *key, void *out) {
     if (!hm->buckets)
         return -1;
 
@@ -96,8 +91,7 @@ int hashmap_get(const hashmap *hm, const char *key, void *out)
     return -1;
 }
 
-int hashmap_delete(hashmap *hm, const char *key)
-{
+int hashmap_delete(hashmap *hm, const char *key) {
     if (!hm->buckets)
         return -1;
 
@@ -125,13 +119,9 @@ int hashmap_delete(hashmap *hm, const char *key)
     return -1;
 }
 
-size_t hashmap_len(const hashmap *hm)
-{
-    return hm->count;
-}
+size_t hashmap_len(const hashmap *hm) { return hm->count; }
 
-void hashmap_free(hashmap *hm)
-{
+void hashmap_free(hashmap *hm) {
     if (!hm->buckets)
         return;
 

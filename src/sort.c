@@ -3,7 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-static void merge(void *arr, size_t left, size_t mid, size_t right, size_t elem_size, unsigned char *tmp, int (*cmp)(const void *, const void *)) {
+static void merge(void *arr, size_t left, size_t mid, size_t right, size_t elem_size,
+                  unsigned char *tmp, int (*cmp)(const void *, const void *)) {
     unsigned char *a = (unsigned char *)arr;
     size_t i = left, j = mid + 1, k = 0;
 
@@ -33,7 +34,8 @@ static void merge(void *arr, size_t left, size_t mid, size_t right, size_t elem_
     memcpy(a + left * elem_size, tmp, (right - left + 1) * elem_size);
 }
 
-static int merge_sort_impl(void *arr, size_t left, size_t right, size_t elem_size, unsigned char *tmp, int (*cmp)(const void *, const void *)) {
+static int merge_sort_impl(void *arr, size_t left, size_t right, size_t elem_size,
+                           unsigned char *tmp, int (*cmp)(const void *, const void *)) {
     if (left < right) {
         size_t mid = left + (right - left) / 2;
         if (merge_sort_impl(arr, left, mid, elem_size, tmp, cmp) != 0)
@@ -58,7 +60,8 @@ int sort_merge(void *arr, size_t n, size_t elem_size, int (*cmp)(const void *, c
     return result;
 }
 
-int sort_bsearch(const void *arr, size_t n, size_t elem_size, const void *key, int (*cmp)(const void *, const void *), size_t *out_idx) {
+int sort_bsearch(const void *arr, size_t n, size_t elem_size, const void *key,
+                 int (*cmp)(const void *, const void *), size_t *out_idx) {
     const unsigned char *a = (const unsigned char *)arr;
     size_t left = 0, right = n;
 

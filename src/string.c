@@ -60,13 +60,9 @@ int string_builder_push_bytes(string_builder *sb, const void *buf, size_t n) {
     return 0;
 }
 
-const char *string_builder_data(const string_builder *sb) {
-    return sb->data;
-}
+const char *string_builder_data(const string_builder *sb) { return sb->data; }
 
-size_t string_builder_len(const string_builder *sb) {
-    return sb->len;
-}
+size_t string_builder_len(const string_builder *sb) { return sb->len; }
 
 void string_builder_free(string_builder *sb) {
     free(sb->data);

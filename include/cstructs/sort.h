@@ -9,6 +9,7 @@ int sort_merge(void *arr, size_t n, size_t elem_size, int (*cmp)(const void *, c
 
 /* Binary search in a sorted array. */
 /* Returns 1 if found and sets *out_idx to the index, 0 if not found. */
-int sort_bsearch(const void *arr, size_t n, size_t elem_size, const void *key, int (*cmp)(const void *, const void *), size_t *out_idx);
+int sort_bsearch(const void *arr, size_t n, size_t elem_size, const void *key,
+                 int (*cmp)(const void *, const void *), size_t *out_idx);
 
 #endif /* CSTRUCTS_SORT_H */

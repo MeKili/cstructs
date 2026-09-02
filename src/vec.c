@@ -25,13 +25,9 @@ int vec_push(vec *v, const void *elem) {
     return 0;
 }
 
-void *vec_at(const vec *v, size_t i) {
-    return v->data + i * v->elem_size;
-}
+void *vec_at(const vec *v, size_t i) { return v->data + i * v->elem_size; }
 
-size_t vec_len(const vec *v) {
-    return v->len;
-}
+size_t vec_len(const vec *v) { return v->len; }
 
 void vec_free(vec *v) {
     free(v->data);

@@ -8,14 +8,14 @@
 static int cmp_int(const void *a, const void *b) {
     int x = *(const int *)a;
     int y = *(const int *)b;
-    if (x < y) return -1;
-    if (x > y) return 1;
+    if (x < y)
+        return -1;
+    if (x > y)
+        return 1;
     return 0;
 }
 
-static int cmp_int_desc(const void *a, const void *b) {
-    return cmp_int(b, a);
-}
+static int cmp_int_desc(const void *a, const void *b) { return cmp_int(b, a); }
 
 static int cmp_str(const void *a, const void *b) {
     return strcmp((const char *)a, (const char *)b);
@@ -34,7 +34,8 @@ int main(void) {
         int arr[] = {5, 2, 8, 1, 9, 3};
         size_t n = 6;
         assert(sort_merge(arr, n, sizeof(int), cmp_int_desc) == 0);
-        assert(arr[0] == 9 && arr[1] == 8 && arr[2] == 5 && arr[3] == 3 && arr[4] == 2 && arr[5] == 1);
+        assert(arr[0] == 9 && arr[1] == 8 && arr[2] == 5 && arr[3] == 3 && arr[4] == 2 &&
+               arr[5] == 1);
     }
 
     {

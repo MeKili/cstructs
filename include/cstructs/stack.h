@@ -20,7 +20,8 @@ int stack_push(stack *s, const void *elem);
 /* Pop and return the top element into `*out`. Behaviour is undefined if `stack_len(s) == 0`. */
 void stack_pop(stack *s, void *out);
 
-/* Return a pointer to the top element without removing it. Behaviour is undefined if `stack_len(s) == 0`. */
+/* Return a pointer to the top element without removing it. Behaviour is undefined if `stack_len(s)
+ * == 0`. */
 void *stack_top(const stack *s);
 
 /* Number of elements currently stored. */
