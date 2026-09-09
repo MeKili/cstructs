@@ -25,6 +25,11 @@ int vec_push(vec *v, const void *elem) {
     return 0;
 }
 
+void vec_pop(vec *v, void *out) {
+    memcpy(out, v->data + (v->len - 1) * v->elem_size, v->elem_size);
+    v->len--;
+}
+
 void *vec_at(const vec *v, size_t i) { return v->data + i * v->elem_size; }
 
 size_t vec_len(const vec *v) { return v->len; }

@@ -17,6 +17,9 @@ void vec_init(vec *v, size_t elem_size);
 /* Append a copy of `*elem` to the vector. Returns 0 on success, -1 on allocation failure. */
 int vec_push(vec *v, const void *elem);
 
+/* Remove and return the last element into `*out`. Behaviour is undefined if `vec_len(v) == 0`. */
+void vec_pop(vec *v, void *out);
+
 /* Return a pointer to element `i`. Behaviour is undefined if `i >= vec_len(v)`. */
 void *vec_at(const vec *v, size_t i);
 

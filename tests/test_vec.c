@@ -17,6 +17,13 @@ int main(void) {
         assert(*(int *)vec_at(&v, (size_t)i) == i);
     }
 
+    int popped;
+    for (int i = 99; i >= 0; i--) {
+        vec_pop(&v, &popped);
+        assert(popped == i);
+        assert(vec_len(&v) == (size_t)i);
+    }
+
     vec_free(&v);
     assert(vec_len(&v) == 0);
 
