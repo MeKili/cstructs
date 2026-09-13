@@ -26,6 +26,12 @@ void *vec_at(const vec *v, size_t i);
 /* Number of elements currently stored. */
 size_t vec_len(const vec *v);
 
+/* Current capacity (allocated slots, may be > len). */
+size_t vec_capacity(const vec *v);
+
+/* Clear all elements without freeing storage. */
+void vec_clear(vec *v);
+
 /* Free the vector's storage and reset it to the empty state. */
 void vec_free(vec *v);
 

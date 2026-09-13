@@ -34,6 +34,10 @@ void *vec_at(const vec *v, size_t i) { return v->data + i * v->elem_size; }
 
 size_t vec_len(const vec *v) { return v->len; }
 
+size_t vec_capacity(const vec *v) { return v->cap; }
+
+void vec_clear(vec *v) { v->len = 0; }
+
 void vec_free(vec *v) {
     free(v->data);
     v->data = NULL;
