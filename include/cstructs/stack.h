@@ -27,6 +27,12 @@ void *stack_top(const stack *s);
 /* Number of elements currently stored. */
 size_t stack_len(const stack *s);
 
+/* Current capacity (allocated slots, may be > len). */
+size_t stack_capacity(const stack *s);
+
+/* Clear all elements without freeing storage. */
+void stack_clear(stack *s);
+
 /* Free the stack's storage and reset it to the empty state. */
 void stack_free(stack *s);
 

@@ -34,6 +34,10 @@ void *stack_top(const stack *s) { return s->data + (s->len - 1) * s->elem_size; 
 
 size_t stack_len(const stack *s) { return s->len; }
 
+size_t stack_capacity(const stack *s) { return s->cap; }
+
+void stack_clear(stack *s) { s->len = 0; }
+
 void stack_free(stack *s) {
     free(s->data);
     s->data = NULL;

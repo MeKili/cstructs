@@ -51,6 +51,29 @@ int main(void) {
     stack_free(&s2);
     assert(stack_len(&s2) == 0);
 
+    /* Test clear and reuse. */
+    {
+        stack s3;
+        stack_init(&s3, sizeof(int));
+
+        for (int i = 0; i < 30; i++) {
+            assert(stack_push(&s3, &i) == 0);
+        }
+        assert(stack_len(&s3) == 30);
+        size_t cap_before_clear = stack_capacity(&s3);
+        stack_clear(&s3);
+        assert(stack_len(&s3) == 0);
+        assert(stack_capacity(&s3) == cap_before_clear);
+
+        /* After clear, can reuse without reallocation. */
+        for (int i = 0; i < 30; i++) {
+            assert(stack_push(&s3, &i) == 0);
+        }
+        assert(stack_len(&s3) == 30);
+
+        stack_free(&s3);
+    }
+
     stack_free(&s);
     assert(stack_len(&s) == 0);
 
