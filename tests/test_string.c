@@ -2,6 +2,7 @@
 
 #include <assert.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 int main(void) {
@@ -128,6 +129,63 @@ int main(void) {
         assert(string_builder_push_str(&sb, "second") == 0);
         assert(string_builder_len(&sb) == 6);
         assert(memcmp(string_builder_data(&sb), "second", 6) == 0);
+        string_builder_free(&sb);
+    }
+
+    /* Test get_c_str on empty string. */
+    {
+        string_builder sb;
+        string_builder_init(&sb);
+        char *cstr = string_builder_get_c_str(&sb);
+        assert(cstr != NULL);
+        assert(cstr[0] == '\0');
+        free(cstr);
+        string_builder_free(&sb);
+    }
+
+    /* Test get_c_str on simple string. */
+    {
+        string_builder sb;
+        string_builder_init(&sb);
+        assert(string_builder_push_str(&sb, "hello") == 0);
+        char *cstr = string_builder_get_c_str(&sb);
+        assert(cstr != NULL);
+        assert(strcmp(cstr, "hello") == 0);
+        free(cstr);
+        string_builder_free(&sb);
+    }
+
+    /* Test get_c_str with binary data. */
+    {
+        string_builder sb;
+        string_builder_init(&sb);
+        const unsigned char data[] = {'a', 'b', '\0', 'c', 'd'};
+        assert(string_builder_push_bytes(&sb, data, 5) == 0);
+        char *cstr = string_builder_get_c_str(&sb);
+        assert(cstr != NULL);
+        assert(cstr[0] == 'a');
+        assert(cstr[1] == 'b');
+        assert(cstr[2] == '\0');
+        assert(cstr[3] == 'c');
+        assert(cstr[4] == 'd');
+        assert(cstr[5] == '\0');
+        free(cstr);
+        string_builder_free(&sb);
+    }
+
+    /* Test get_c_str multiple times. */
+    {
+        string_builder sb;
+        string_builder_init(&sb);
+        assert(string_builder_push_str(&sb, "test") == 0);
+        char *cstr1 = string_builder_get_c_str(&sb);
+        char *cstr2 = string_builder_get_c_str(&sb);
+        assert(cstr1 != NULL);
+        assert(cstr2 != NULL);
+        assert(strcmp(cstr1, cstr2) == 0);
+        assert(cstr1 != cstr2);
+        free(cstr1);
+        free(cstr2);
         string_builder_free(&sb);
     }
 

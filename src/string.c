@@ -62,6 +62,18 @@ int string_builder_push_bytes(string_builder *sb, const void *buf, size_t n) {
 
 const char *string_builder_data(const string_builder *sb) { return sb->data; }
 
+char *string_builder_get_c_str(string_builder *sb) {
+    char *result = malloc(sb->len + 1);
+    if (result == NULL) {
+        return NULL;
+    }
+    if (sb->len > 0) {
+        memcpy(result, sb->data, sb->len);
+    }
+    result[sb->len] = '\0';
+    return result;
+}
+
 size_t string_builder_len(const string_builder *sb) { return sb->len; }
 
 void string_builder_free(string_builder *sb) {

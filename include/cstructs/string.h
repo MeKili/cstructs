@@ -25,6 +25,10 @@ int string_builder_push_bytes(string_builder *sb, const void *buf, size_t n);
 /* Get the built string (not null-terminated). Length is string_builder_len(sb). */
 const char *string_builder_data(const string_builder *sb);
 
+/* Get the built string as a null-terminated C string. Caller must free the returned pointer. */
+/* Returns NULL if memory allocation fails. */
+char *string_builder_get_c_str(string_builder *sb);
+
 /* Current length in bytes (not counting null terminator, if any). */
 size_t string_builder_len(const string_builder *sb);
 
