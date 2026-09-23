@@ -70,6 +70,51 @@ int main(void) {
         assert(iter_foreach(arr, n, elem_size, count_func) == 0);
     }
 
+    {
+        size_t idx = iter_find(arr, n, elem_size, is_even);
+        assert(idx == 1);
+    }
+
+    {
+        int no_match_predicate(const void *elem) {
+            return (*(const int *)elem) > 100;
+        }
+        size_t idx = iter_find(arr, n, elem_size, no_match_predicate);
+        assert(idx == (size_t)-1);
+    }
+
+    {
+        size_t idx = iter_find(arr, 0, elem_size, is_even);
+        assert(idx == (size_t)-1);
+    }
+
+    {
+        size_t count = iter_count(arr, n, elem_size, is_even);
+        assert(count == 2);
+    }
+
+    {
+        int no_match_predicate(const void *elem) {
+            return (*(const int *)elem) > 100;
+        }
+        size_t count = iter_count(arr, n, elem_size, no_match_predicate);
+        assert(count == 0);
+    }
+
+    {
+        size_t count = iter_count(arr, 0, elem_size, is_even);
+        assert(count == 0);
+    }
+
+    {
+        int all_match_predicate(const void *elem) {
+            (void)elem;
+            return 1;
+        }
+        size_t count = iter_count(arr, n, elem_size, all_match_predicate);
+        assert(count == n);
+    }
+
     printf("test_iter: ok\n");
     return 0;
 }

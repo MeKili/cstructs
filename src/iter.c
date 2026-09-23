@@ -69,3 +69,24 @@ int iter_foreach(const void *arr, size_t n, size_t elem_size, int (*func)(const 
     }
     return 0;
 }
+
+size_t iter_find(const void *arr, size_t n, size_t elem_size, int (*predicate)(const void *elem)) {
+    const unsigned char *data = (const unsigned char *)arr;
+    for (size_t i = 0; i < n; i++) {
+        if (predicate(data + i * elem_size)) {
+            return i;
+        }
+    }
+    return (size_t)-1;
+}
+
+size_t iter_count(const void *arr, size_t n, size_t elem_size, int (*predicate)(const void *elem)) {
+    size_t count = 0;
+    const unsigned char *data = (const unsigned char *)arr;
+    for (size_t i = 0; i < n; i++) {
+        if (predicate(data + i * elem_size)) {
+            count++;
+        }
+    }
+    return count;
+}

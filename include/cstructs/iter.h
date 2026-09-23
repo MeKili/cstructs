@@ -19,4 +19,11 @@ int iter_filter(const void *src, size_t n, size_t elem_size, int (*predicate)(co
  * Returns 0 on success, -1 if the function returns -1 for any element. */
 int iter_foreach(const void *arr, size_t n, size_t elem_size, int (*func)(const void *elem));
 
+/* Find the first element matching a predicate.
+ * Returns the index of the first matching element, or (size_t)-1 if not found. */
+size_t iter_find(const void *arr, size_t n, size_t elem_size, int (*predicate)(const void *elem));
+
+/* Count elements matching a predicate. */
+size_t iter_count(const void *arr, size_t n, size_t elem_size, int (*predicate)(const void *elem));
+
 #endif /* CSTRUCTS_ITER_H */
