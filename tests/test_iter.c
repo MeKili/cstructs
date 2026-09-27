@@ -115,6 +115,63 @@ int main(void) {
         assert(count == n);
     }
 
+    {
+        int result = iter_any(arr, n, elem_size, is_even);
+        assert(result == 1);
+    }
+
+    {
+        int no_match_predicate(const void *elem) {
+            return (*(const int *)elem) > 100;
+        }
+        int result = iter_any(arr, n, elem_size, no_match_predicate);
+        assert(result == 0);
+    }
+
+    {
+        int result = iter_any(arr, 0, elem_size, is_even);
+        assert(result == 0);
+    }
+
+    {
+        int all_even(const void *elem) {
+            return (*(const int *)elem) % 2 == 0;
+        }
+        int result = iter_all(arr, n, elem_size, all_even);
+        assert(result == 0);
+    }
+
+    {
+        int all_positive(const void *elem) {
+            return (*(const int *)elem) > 0;
+        }
+        int result = iter_all(arr, n, elem_size, all_positive);
+        assert(result == 1);
+    }
+
+    {
+        int all_match(const void *elem) {
+            (void)elem;
+            return 1;
+        }
+        int result = iter_all(arr, n, elem_size, all_match);
+        assert(result == 1);
+    }
+
+    {
+        int no_match(const void *elem) {
+            (void)elem;
+            return 0;
+        }
+        int result = iter_all(arr, n, elem_size, no_match);
+        assert(result == 0);
+    }
+
+    {
+        int result = iter_all(arr, 0, elem_size, is_even);
+        assert(result == 1);
+    }
+
     printf("test_iter: ok\n");
     return 0;
 }

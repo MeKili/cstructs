@@ -26,4 +26,10 @@ size_t iter_find(const void *arr, size_t n, size_t elem_size, int (*predicate)(c
 /* Count elements matching a predicate. */
 size_t iter_count(const void *arr, size_t n, size_t elem_size, int (*predicate)(const void *elem));
 
+/* Check if any element matches a predicate. Returns 1 if true, 0 if false. */
+int iter_any(const void *arr, size_t n, size_t elem_size, int (*predicate)(const void *elem));
+
+/* Check if all elements match a predicate. Returns 1 if true, 0 if false. */
+int iter_all(const void *arr, size_t n, size_t elem_size, int (*predicate)(const void *elem));
+
 #endif /* CSTRUCTS_ITER_H */

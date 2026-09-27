@@ -90,3 +90,23 @@ size_t iter_count(const void *arr, size_t n, size_t elem_size, int (*predicate)(
     }
     return count;
 }
+
+int iter_any(const void *arr, size_t n, size_t elem_size, int (*predicate)(const void *elem)) {
+    const unsigned char *data = (const unsigned char *)arr;
+    for (size_t i = 0; i < n; i++) {
+        if (predicate(data + i * elem_size)) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int iter_all(const void *arr, size_t n, size_t elem_size, int (*predicate)(const void *elem)) {
+    const unsigned char *data = (const unsigned char *)arr;
+    for (size_t i = 0; i < n; i++) {
+        if (!predicate(data + i * elem_size)) {
+            return 0;
+        }
+    }
+    return 1;
+}
