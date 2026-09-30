@@ -32,6 +32,10 @@ size_t vec_capacity(const vec *v);
 /* Clear all elements without freeing storage. */
 void vec_clear(vec *v);
 
+/* Remove the element at index `i`, shifting subsequent elements.
+ * Returns 0 on success, -1 if i >= len. Behaviour is undefined if vector is empty and i == 0. */
+int vec_remove(vec *v, size_t i);
+
 /* Free the vector's storage and reset it to the empty state. */
 void vec_free(vec *v);
 

@@ -38,6 +38,18 @@ size_t vec_capacity(const vec *v) { return v->cap; }
 
 void vec_clear(vec *v) { v->len = 0; }
 
+int vec_remove(vec *v, size_t i) {
+    if (i >= v->len) {
+        return -1;
+    }
+    if (i < v->len - 1) {
+        memmove(v->data + i * v->elem_size, v->data + (i + 1) * v->elem_size,
+                (v->len - i - 1) * v->elem_size);
+    }
+    v->len--;
+    return 0;
+}
+
 void vec_free(vec *v) {
     free(v->data);
     v->data = NULL;

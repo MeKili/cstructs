@@ -44,6 +44,40 @@ int main(void) {
     assert(vec_len(&v) == 0);
     assert(vec_capacity(&v) == 0);
 
+    /* Test vec_remove. */
+    for (int i = 0; i < 10; i++) {
+        assert(vec_push(&v, &i) == 0);
+    }
+    assert(vec_len(&v) == 10);
+
+    /* Remove from middle: [0,1,2,3,4,5,6,7,8,9] -> [0,1,2,4,5,6,7,8,9] */
+    assert(vec_remove(&v, 3) == 0);
+    assert(vec_len(&v) == 9);
+    assert(*(int *)vec_at(&v, 3) == 4);
+    assert(*(int *)vec_at(&v, 4) == 5);
+
+    /* Remove from start. */
+    assert(vec_remove(&v, 0) == 0);
+    assert(vec_len(&v) == 8);
+    assert(*(int *)vec_at(&v, 0) == 1);
+
+    /* Remove from end. */
+    assert(vec_remove(&v, 7) == 0);
+    assert(vec_len(&v) == 7);
+
+    /* Test invalid remove. */
+    assert(vec_remove(&v, 7) == -1);
+    assert(vec_remove(&v, 100) == -1);
+    assert(vec_len(&v) == 7);
+
+    /* Remove all remaining elements. */
+    for (int i = 0; i < 7; i++) {
+        assert(vec_remove(&v, 0) == 0);
+        assert(vec_len(&v) == (size_t)(6 - i));
+    }
+
+    vec_free(&v);
+
     printf("test_vec: ok\n");
     return 0;
 }
