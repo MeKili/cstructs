@@ -36,6 +36,10 @@ void vec_clear(vec *v);
  * Returns 0 on success, -1 if i >= len. Behaviour is undefined if vector is empty and i == 0. */
 int vec_remove(vec *v, size_t i);
 
+/* Insert a copy of `*elem` at index `i`, shifting subsequent elements.
+ * Returns 0 on success, -1 if i > len or on allocation failure. */
+int vec_insert(vec *v, size_t i, const void *elem);
+
 /* Free the vector's storage and reset it to the empty state. */
 void vec_free(vec *v);
 

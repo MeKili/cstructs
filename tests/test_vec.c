@@ -78,6 +78,50 @@ int main(void) {
 
     vec_free(&v);
 
+    /* Test vec_insert. */
+    vec_init(&v, sizeof(int));
+
+    /* Insert into empty vector. */
+    int val = 10;
+    assert(vec_insert(&v, 0, &val) == 0);
+    assert(vec_len(&v) == 1);
+    assert(*(int *)vec_at(&v, 0) == 10);
+
+    /* Insert at beginning: [10] -> [5, 10] */
+    val = 5;
+    assert(vec_insert(&v, 0, &val) == 0);
+    assert(vec_len(&v) == 2);
+    assert(*(int *)vec_at(&v, 0) == 5);
+    assert(*(int *)vec_at(&v, 1) == 10);
+
+    /* Insert in middle: [5, 10] -> [5, 7, 10] */
+    val = 7;
+    assert(vec_insert(&v, 1, &val) == 0);
+    assert(vec_len(&v) == 3);
+    assert(*(int *)vec_at(&v, 0) == 5);
+    assert(*(int *)vec_at(&v, 1) == 7);
+    assert(*(int *)vec_at(&v, 2) == 10);
+
+    /* Insert at end: [5, 7, 10] -> [5, 7, 10, 15] */
+    val = 15;
+    assert(vec_insert(&v, 3, &val) == 0);
+    assert(vec_len(&v) == 4);
+    assert(*(int *)vec_at(&v, 3) == 15);
+
+    /* Insert multiple times to test reallocation. */
+    for (int i = 0; i < 10; i++) {
+        int x = 20 + i;
+        assert(vec_insert(&v, vec_len(&v), &x) == 0);
+    }
+    assert(vec_len(&v) == 14);
+
+    /* Test invalid insert. */
+    assert(vec_insert(&v, 15, &val) == -1);
+    assert(vec_insert(&v, 100, &val) == -1);
+    assert(vec_len(&v) == 14);
+
+    vec_free(&v);
+
     printf("test_vec: ok\n");
     return 0;
 }

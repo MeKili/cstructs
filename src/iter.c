@@ -3,7 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-int iter_map(const void *src, size_t n, size_t elem_size, int (*transform)(const void *in, void *out), void **out_arr) {
+int iter_map(const void *src, size_t n, size_t elem_size,
+             int (*transform)(const void *in, void *out), void **out_arr) {
     if (n == 0) {
         *out_arr = NULL;
         return 0;
@@ -26,7 +27,8 @@ int iter_map(const void *src, size_t n, size_t elem_size, int (*transform)(const
     return 0;
 }
 
-int iter_filter(const void *src, size_t n, size_t elem_size, int (*predicate)(const void *elem), void **out_arr) {
+int iter_filter(const void *src, size_t n, size_t elem_size, int (*predicate)(const void *elem),
+                void **out_arr) {
     size_t count = 0;
 
     for (size_t i = 0; i < n; i++) {

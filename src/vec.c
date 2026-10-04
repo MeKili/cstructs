@@ -50,6 +50,28 @@ int vec_remove(vec *v, size_t i) {
     return 0;
 }
 
+int vec_insert(vec *v, size_t i, const void *elem) {
+    if (i > v->len) {
+        return -1;
+    }
+    if (v->len == v->cap) {
+        size_t new_cap = v->cap == 0 ? 4 : v->cap * 2;
+        unsigned char *new_data = realloc(v->data, new_cap * v->elem_size);
+        if (new_data == NULL) {
+            return -1;
+        }
+        v->data = new_data;
+        v->cap = new_cap;
+    }
+    if (i < v->len) {
+        memmove(v->data + (i + 1) * v->elem_size, v->data + i * v->elem_size,
+                (v->len - i) * v->elem_size);
+    }
+    memcpy(v->data + i * v->elem_size, elem, v->elem_size);
+    v->len++;
+    return 0;
+}
+
 void vec_free(vec *v) {
     free(v->data);
     v->data = NULL;

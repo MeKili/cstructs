@@ -11,9 +11,7 @@ int double_int(const void *in, void *out) {
     return 0;
 }
 
-int is_even(const void *elem) {
-    return (*(const int *)elem) % 2 == 0;
-}
+int is_even(const void *elem) { return (*(const int *)elem) % 2 == 0; }
 
 int count_func(const void *elem) {
     (void)elem;
@@ -66,9 +64,7 @@ int main(void) {
         assert(empty_filter == NULL);
     }
 
-    {
-        assert(iter_foreach(arr, n, elem_size, count_func) == 0);
-    }
+    { assert(iter_foreach(arr, n, elem_size, count_func) == 0); }
 
     {
         size_t idx = iter_find(arr, n, elem_size, is_even);
@@ -76,9 +72,7 @@ int main(void) {
     }
 
     {
-        int no_match_predicate(const void *elem) {
-            return (*(const int *)elem) > 100;
-        }
+        int no_match_predicate(const void *elem) { return (*(const int *)elem) > 100; }
         size_t idx = iter_find(arr, n, elem_size, no_match_predicate);
         assert(idx == (size_t)-1);
     }
@@ -94,9 +88,7 @@ int main(void) {
     }
 
     {
-        int no_match_predicate(const void *elem) {
-            return (*(const int *)elem) > 100;
-        }
+        int no_match_predicate(const void *elem) { return (*(const int *)elem) > 100; }
         size_t count = iter_count(arr, n, elem_size, no_match_predicate);
         assert(count == 0);
     }
@@ -121,9 +113,7 @@ int main(void) {
     }
 
     {
-        int no_match_predicate(const void *elem) {
-            return (*(const int *)elem) > 100;
-        }
+        int no_match_predicate(const void *elem) { return (*(const int *)elem) > 100; }
         int result = iter_any(arr, n, elem_size, no_match_predicate);
         assert(result == 0);
     }
@@ -134,17 +124,13 @@ int main(void) {
     }
 
     {
-        int all_even(const void *elem) {
-            return (*(const int *)elem) % 2 == 0;
-        }
+        int all_even(const void *elem) { return (*(const int *)elem) % 2 == 0; }
         int result = iter_all(arr, n, elem_size, all_even);
         assert(result == 0);
     }
 
     {
-        int all_positive(const void *elem) {
-            return (*(const int *)elem) > 0;
-        }
+        int all_positive(const void *elem) { return (*(const int *)elem) > 0; }
         int result = iter_all(arr, n, elem_size, all_positive);
         assert(result == 1);
     }
