@@ -1,4 +1,4 @@
-#include "cstructs/stack.h"
+#include "../include/cstructs/stack.h"
 
 #include <stdlib.h>
 #include <string.h>

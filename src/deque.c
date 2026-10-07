@@ -1,4 +1,4 @@
-#include <cstructs/deque.h>
+#include "../include/cstructs/deque.h"
 #include <stdlib.h>
 #include <string.h>
 

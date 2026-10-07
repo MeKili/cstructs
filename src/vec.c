@@ -1,4 +1,4 @@
-#include "cstructs/vec.h"
+#include "../include/cstructs/vec.h"
 
 #include <stdlib.h>
 #include <string.h>

@@ -1,4 +1,4 @@
-#include "cstructs/sort.h"
+#include "../include/cstructs/sort.h"
 
 #include <stdlib.h>
 #include <string.h>
