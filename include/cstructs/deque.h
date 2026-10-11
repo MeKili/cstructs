@@ -33,6 +33,12 @@ void *deque_at(const deque *d, size_t i);
 /* Number of elements currently stored. */
 size_t deque_len(const deque *d);
 
+/* Current capacity (allocated slots, may be > len). */
+size_t deque_capacity(const deque *d);
+
+/* Clear all elements without freeing storage. */
+void deque_clear(deque *d);
+
 /* Free the deque's storage and reset it to the empty state. */
 void deque_free(deque *d);
 

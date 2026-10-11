@@ -106,6 +106,28 @@ int main(void) {
 
     deque_free(&d);
 
+    deque_init(&d, sizeof(int));
+    assert(deque_capacity(&d) == 0);
+
+    int val = 1;
+    deque_push_back(&d, &val);
+    size_t cap_after_push = deque_capacity(&d);
+    assert(cap_after_push > 0);
+    assert(deque_len(&d) == 1);
+
+    for (int i = 2; i <= 10; i++) {
+        deque_push_back(&d, &i);
+    }
+    assert(deque_len(&d) == 10);
+    assert(deque_capacity(&d) >= 10);
+
+    size_t cap_before_clear = deque_capacity(&d);
+    deque_clear(&d);
+    assert(deque_len(&d) == 0);
+    assert(deque_capacity(&d) == cap_before_clear);
+
+    deque_free(&d);
+
     printf("test_deque: ok\n");
     return 0;
 }

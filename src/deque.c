@@ -73,6 +73,10 @@ void *deque_at(const deque *d, size_t i) {
 
 size_t deque_len(const deque *d) { return d->len; }
 
+size_t deque_capacity(const deque *d) { return d->cap; }
+
+void deque_clear(deque *d) { d->len = 0; }
+
 void deque_free(deque *d) {
     free(d->data);
     d->data = NULL;
