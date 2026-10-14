@@ -23,6 +23,12 @@ void vec_pop(vec *v, void *out);
 /* Return a pointer to element `i`. Behaviour is undefined if `i >= vec_len(v)`. */
 void *vec_at(const vec *v, size_t i);
 
+/* Return a pointer to the first element. Behaviour is undefined if `vec_len(v) == 0`. */
+void *vec_first(const vec *v);
+
+/* Return a pointer to the last element. Behaviour is undefined if `vec_len(v) == 0`. */
+void *vec_last(const vec *v);
+
 /* Number of elements currently stored. */
 size_t vec_len(const vec *v);
 

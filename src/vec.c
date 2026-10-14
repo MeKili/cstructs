@@ -32,6 +32,10 @@ void vec_pop(vec *v, void *out) {
 
 void *vec_at(const vec *v, size_t i) { return v->data + i * v->elem_size; }
 
+void *vec_first(const vec *v) { return v->data; }
+
+void *vec_last(const vec *v) { return v->data + (v->len - 1) * v->elem_size; }
+
 size_t vec_len(const vec *v) { return v->len; }
 
 size_t vec_capacity(const vec *v) { return v->cap; }

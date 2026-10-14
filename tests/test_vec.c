@@ -122,6 +122,32 @@ int main(void) {
 
     vec_free(&v);
 
+    /* Test vec_first and vec_last. */
+    vec_init(&v, sizeof(int));
+    for (int i = 0; i < 10; i++) {
+        assert(vec_push(&v, &i) == 0);
+    }
+    assert(*(int *)vec_first(&v) == 0);
+    assert(*(int *)vec_last(&v) == 9);
+
+    /* With single element. */
+    vec_clear(&v);
+    val = 42;
+    assert(vec_push(&v, &val) == 0);
+    assert(*(int *)vec_first(&v) == 42);
+    assert(*(int *)vec_last(&v) == 42);
+
+    /* After removal. */
+    vec_remove(&v, 0);
+    val = 5;
+    assert(vec_push(&v, &val) == 0);
+    val = 10;
+    assert(vec_push(&v, &val) == 0);
+    assert(*(int *)vec_first(&v) == 5);
+    assert(*(int *)vec_last(&v) == 10);
+
+    vec_free(&v);
+
     printf("test_vec: ok\n");
     return 0;
 }
