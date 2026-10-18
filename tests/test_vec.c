@@ -148,6 +148,41 @@ int main(void) {
 
     vec_free(&v);
 
+    /* Test vec_reverse. */
+    vec_init(&v, sizeof(int));
+    for (int i = 0; i < 5; i++) {
+        assert(vec_push(&v, &i) == 0);
+    }
+    vec_reverse(&v);
+    assert(vec_len(&v) == 5);
+    assert(*(int *)vec_at(&v, 0) == 4);
+    assert(*(int *)vec_at(&v, 1) == 3);
+    assert(*(int *)vec_at(&v, 2) == 2);
+    assert(*(int *)vec_at(&v, 3) == 1);
+    assert(*(int *)vec_at(&v, 4) == 0);
+
+    /* Reverse again should restore original order. */
+    vec_reverse(&v);
+    assert(*(int *)vec_at(&v, 0) == 0);
+    assert(*(int *)vec_at(&v, 1) == 1);
+    assert(*(int *)vec_at(&v, 2) == 2);
+    assert(*(int *)vec_at(&v, 3) == 3);
+    assert(*(int *)vec_at(&v, 4) == 4);
+
+    /* Reverse single element. */
+    vec_clear(&v);
+    int single = 42;
+    assert(vec_push(&v, &single) == 0);
+    vec_reverse(&v);
+    assert(*(int *)vec_at(&v, 0) == 42);
+
+    /* Reverse empty vector. */
+    vec_clear(&v);
+    vec_reverse(&v);
+    assert(vec_len(&v) == 0);
+
+    vec_free(&v);
+
     printf("test_vec: ok\n");
     return 0;
 }

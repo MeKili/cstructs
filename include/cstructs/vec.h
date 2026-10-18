@@ -49,4 +49,7 @@ int vec_insert(vec *v, size_t i, const void *elem);
 /* Free the vector's storage and reset it to the empty state. */
 void vec_free(vec *v);
 
+/* Reverse the order of all elements in the vector. */
+void vec_reverse(vec *v);
+
 #endif /* CSTRUCTS_VEC_H */

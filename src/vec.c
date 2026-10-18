@@ -82,3 +82,17 @@ void vec_free(vec *v) {
     v->len = 0;
     v->cap = 0;
 }
+
+void vec_reverse(vec *v) {
+    unsigned char *tmp = malloc(v->elem_size);
+    if (tmp == NULL) {
+        return;
+    }
+    for (size_t i = 0; i < v->len / 2; i++) {
+        size_t j = v->len - 1 - i;
+        memcpy(tmp, v->data + i * v->elem_size, v->elem_size);
+        memcpy(v->data + i * v->elem_size, v->data + j * v->elem_size, v->elem_size);
+        memcpy(v->data + j * v->elem_size, tmp, v->elem_size);
+    }
+    free(tmp);
+}
