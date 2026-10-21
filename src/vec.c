@@ -96,3 +96,16 @@ void vec_reverse(vec *v) {
     }
     free(tmp);
 }
+
+int vec_reserve(vec *v, size_t new_cap) {
+    if (new_cap <= v->cap) {
+        return 0;
+    }
+    unsigned char *new_data = realloc(v->data, new_cap * v->elem_size);
+    if (new_data == NULL) {
+        return -1;
+    }
+    v->data = new_data;
+    v->cap = new_cap;
+    return 0;
+}

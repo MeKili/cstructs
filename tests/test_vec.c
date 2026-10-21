@@ -183,6 +183,39 @@ int main(void) {
 
     vec_free(&v);
 
+    /* Test vec_reserve. */
+    vec_init(&v, sizeof(int));
+    assert(vec_len(&v) == 0);
+    assert(vec_capacity(&v) == 0);
+
+    /* Reserve space for 50 elements. */
+    assert(vec_reserve(&v, 50) == 0);
+    assert(vec_capacity(&v) == 50);
+    assert(vec_len(&v) == 0);
+
+    /* Add elements without triggering reallocation. */
+    size_t cap_after_reserve = vec_capacity(&v);
+    for (int i = 0; i < 50; i++) {
+        assert(vec_push(&v, &i) == 0);
+    }
+    assert(vec_len(&v) == 50);
+    assert(vec_capacity(&v) == cap_after_reserve);
+
+    /* Reserve with smaller capacity is no-op. */
+    assert(vec_reserve(&v, 30) == 0);
+    assert(vec_capacity(&v) == cap_after_reserve);
+
+    /* Reserve with exact capacity is no-op. */
+    assert(vec_reserve(&v, cap_after_reserve) == 0);
+    assert(vec_capacity(&v) == cap_after_reserve);
+
+    /* Add more elements to trigger growth. */
+    int x = 50;
+    assert(vec_push(&v, &x) == 0);
+    assert(vec_len(&v) == 51);
+
+    vec_free(&v);
+
     printf("test_vec: ok\n");
     return 0;
 }

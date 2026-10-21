@@ -52,4 +52,8 @@ void vec_free(vec *v);
 /* Reverse the order of all elements in the vector. */
 void vec_reverse(vec *v);
 
+/* Reserve capacity for at least `new_cap` elements. Returns 0 on success, -1 on allocation failure.
+ * If the current capacity is already >= new_cap, this is a no-op. */
+int vec_reserve(vec *v, size_t new_cap);
+
 #endif /* CSTRUCTS_VEC_H */
