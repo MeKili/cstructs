@@ -126,6 +126,61 @@ int main(void) {
         list_free(&l);
     }
 
+    /* Test reverse. */
+    {
+        list l;
+        list_init(&l, sizeof(int));
+
+        int vals[] = {1, 2, 3, 4, 5};
+        for (int i = 0; i < 5; i++) {
+            list_append(&l, &vals[i]);
+        }
+
+        list_reverse(&l);
+        assert(list_len(&l) == 5);
+        assert(*(int *)list_at(&l, 0) == 5);
+        assert(*(int *)list_at(&l, 1) == 4);
+        assert(*(int *)list_at(&l, 2) == 3);
+        assert(*(int *)list_at(&l, 3) == 2);
+        assert(*(int *)list_at(&l, 4) == 1);
+
+        list_free(&l);
+    }
+
+    /* Test find. */
+    {
+        list l;
+        list_init(&l, sizeof(int));
+
+        int vals[] = {10, 20, 30, 40, 50};
+        for (int i = 0; i < 5; i++) {
+            list_append(&l, &vals[i]);
+        }
+
+        int gt25(const void *elem) {
+            return *(int *)elem > 25;
+        }
+
+        size_t idx = list_find(&l, gt25);
+        assert(idx == 2);
+
+        int even(const void *elem) {
+            return *(int *)elem % 2 == 0;
+        }
+
+        idx = list_find(&l, even);
+        assert(idx == 0);
+
+        int gt100(const void *elem) {
+            return *(int *)elem > 100;
+        }
+
+        idx = list_find(&l, gt100);
+        assert(idx == (size_t)-1);
+
+        list_free(&l);
+    }
+
     printf("test_list: ok\n");
     return 0;
 }

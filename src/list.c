@@ -85,3 +85,25 @@ void list_free(list *l) {
     l->head = NULL;
     l->len = 0;
 }
+
+void list_reverse(list *l) {
+    list_node *prev = NULL;
+    list_node *curr = l->head;
+    while (curr) {
+        list_node *next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+    l->head = prev;
+}
+
+size_t list_find(const list *l, int (*predicate)(const void *elem)) {
+    list_node *curr = l->head;
+    for (size_t i = 0; curr; curr = curr->next, i++) {
+        if (predicate(curr->data)) {
+            return i;
+        }
+    }
+    return (size_t)-1;
+}

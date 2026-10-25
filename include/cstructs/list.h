@@ -38,4 +38,11 @@ size_t list_len(const list *l);
 /* Free the list's storage and reset it to the empty state. */
 void list_free(list *l);
 
+/* Reverse the order of all elements in the list. */
+void list_reverse(list *l);
+
+/* Find the first element matching a predicate.
+ * Returns the index of the first matching element, or (size_t)-1 if not found. */
+size_t list_find(const list *l, int (*predicate)(const void *elem));
+
 #endif /* CSTRUCTS_LIST_H */
