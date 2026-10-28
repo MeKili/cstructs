@@ -121,6 +121,25 @@ int hashmap_delete(hashmap *hm, const char *key) {
 
 size_t hashmap_len(const hashmap *hm) { return hm->count; }
 
+void hashmap_clear(hashmap *hm) {
+    if (!hm->buckets)
+        return;
+
+    for (size_t i = 0; i < hm->buckets_count; i++) {
+        hashmap_entry *entry = hm->buckets[i];
+        while (entry) {
+            hashmap_entry *next = entry->next;
+            free(entry->key);
+            free(entry->value);
+            free(entry);
+            entry = next;
+        }
+        hm->buckets[i] = NULL;
+    }
+
+    hm->count = 0;
+}
+
 void hashmap_free(hashmap *hm) {
     if (!hm->buckets)
         return;

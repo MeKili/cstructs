@@ -219,6 +219,39 @@ int main(void) {
         hashmap_free(&hm);
     }
 
+    /* Test clear. */
+    {
+        hashmap hm;
+        hashmap_init(&hm, sizeof(int));
+
+        int val = 1;
+        hashmap_set(&hm, "key1", &val);
+        val = 2;
+        hashmap_set(&hm, "key2", &val);
+        val = 3;
+        hashmap_set(&hm, "key3", &val);
+        assert(hashmap_len(&hm) == 3);
+
+        hashmap_clear(&hm);
+        assert(hashmap_len(&hm) == 0);
+
+        int out = 0;
+        assert(hashmap_get(&hm, "key1", &out) == -1);
+        assert(hashmap_get(&hm, "key2", &out) == -1);
+        assert(hashmap_get(&hm, "key3", &out) == -1);
+
+        /* Can reuse after clear. */
+        val = 99;
+        assert(hashmap_set(&hm, "new_key", &val) == 0);
+        assert(hashmap_len(&hm) == 1);
+
+        out = 0;
+        assert(hashmap_get(&hm, "new_key", &out) == 0);
+        assert(out == 99);
+
+        hashmap_free(&hm);
+    }
+
     printf("test_hashmap: ok\n");
     return 0;
 }

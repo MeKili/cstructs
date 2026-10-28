@@ -32,6 +32,9 @@ int hashmap_delete(hashmap *hm, const char *key);
 /* Number of key-value pairs currently stored. */
 size_t hashmap_len(const hashmap *hm);
 
+/* Clear all entries without freeing the buckets array. */
+void hashmap_clear(hashmap *hm);
+
 /* Free the hash map's storage and reset it to the empty state. */
 void hashmap_free(hashmap *hm);
 
