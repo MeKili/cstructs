@@ -109,3 +109,22 @@ int vec_reserve(vec *v, size_t new_cap) {
     v->cap = new_cap;
     return 0;
 }
+
+int vec_shrink_to_fit(vec *v) {
+    if (v->len == v->cap) {
+        return 0;
+    }
+    if (v->len == 0) {
+        free(v->data);
+        v->data = NULL;
+        v->cap = 0;
+        return 0;
+    }
+    unsigned char *new_data = realloc(v->data, v->len * v->elem_size);
+    if (new_data == NULL) {
+        return -1;
+    }
+    v->data = new_data;
+    v->cap = v->len;
+    return 0;
+}

@@ -216,6 +216,54 @@ int main(void) {
 
     vec_free(&v);
 
+    /* Test vec_shrink_to_fit. */
+    vec_init(&v, sizeof(int));
+
+    /* Push 10 elements, then remove 5. */
+    for (int i = 0; i < 10; i++) {
+        assert(vec_push(&v, &i) == 0);
+    }
+    assert(vec_len(&v) == 10);
+    size_t cap_before = vec_capacity(&v);
+    assert(cap_before >= 10);
+
+    for (int i = 0; i < 5; i++) {
+        int dummy;
+        vec_pop(&v, &dummy);
+    }
+    assert(vec_len(&v) == 5);
+    assert(vec_capacity(&v) == cap_before);  /* Capacity unchanged. */
+
+    /* Shrink to fit. */
+    assert(vec_shrink_to_fit(&v) == 0);
+    assert(vec_len(&v) == 5);
+    assert(vec_capacity(&v) == 5);
+
+    /* Verify remaining elements are intact. */
+    for (int i = 0; i < 5; i++) {
+        assert(*(int *)vec_at(&v, i) == i);
+    }
+
+    /* Shrink when already fit (no-op). */
+    assert(vec_shrink_to_fit(&v) == 0);
+    assert(vec_capacity(&v) == 5);
+
+    vec_free(&v);
+
+    /* Shrink empty vector. */
+    vec_init(&v, sizeof(int));
+    for (int i = 0; i < 20; i++) {
+        assert(vec_push(&v, &i) == 0);
+    }
+    vec_clear(&v);
+    assert(vec_len(&v) == 0);
+    assert(vec_capacity(&v) >= 20);
+    assert(vec_shrink_to_fit(&v) == 0);
+    assert(vec_len(&v) == 0);
+    assert(vec_capacity(&v) == 0);
+
+    vec_free(&v);
+
     printf("test_vec: ok\n");
     return 0;
 }

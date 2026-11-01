@@ -56,4 +56,8 @@ void vec_reverse(vec *v);
  * If the current capacity is already >= new_cap, this is a no-op. */
 int vec_reserve(vec *v, size_t new_cap);
 
+/* Shrink the capacity to exactly match the number of elements (free excess storage).
+ * Returns 0 on success, -1 on allocation failure. */
+int vec_shrink_to_fit(vec *v);
+
 #endif /* CSTRUCTS_VEC_H */
