@@ -39,6 +39,9 @@ size_t deque_capacity(const deque *d);
 /* Clear all elements without freeing storage. */
 void deque_clear(deque *d);
 
+/* Reverse the order of all elements in the deque. */
+void deque_reverse(deque *d);
+
 /* Free the deque's storage and reset it to the empty state. */
 void deque_free(deque *d);
 

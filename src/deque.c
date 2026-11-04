@@ -77,6 +77,24 @@ size_t deque_capacity(const deque *d) { return d->cap; }
 
 void deque_clear(deque *d) { d->len = 0; }
 
+void deque_reverse(deque *d) {
+    unsigned char *tmp = malloc(d->elem_size);
+    if (tmp == NULL)
+        return;
+
+    for (size_t i = 0; i < d->len / 2; i++) {
+        size_t j = d->len - 1 - i;
+        unsigned char *elem_i = deque_at(d, i);
+        unsigned char *elem_j = deque_at(d, j);
+
+        memcpy(tmp, elem_i, d->elem_size);
+        memcpy(elem_i, elem_j, d->elem_size);
+        memcpy(elem_j, tmp, d->elem_size);
+    }
+
+    free(tmp);
+}
+
 void deque_free(deque *d) {
     free(d->data);
     d->data = NULL;

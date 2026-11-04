@@ -128,6 +128,60 @@ int main(void) {
 
     deque_free(&d);
 
+    deque_init(&d, sizeof(int));
+    deque_reverse(&d);
+    assert(deque_len(&d) == 0);
+    deque_free(&d);
+
+    deque_init(&d, sizeof(int));
+    int single = 42;
+    deque_push_back(&d, &single);
+    deque_reverse(&d);
+    assert(deque_len(&d) == 1);
+    assert(*(int *)deque_at(&d, 0) == 42);
+    deque_free(&d);
+
+    deque_init(&d, sizeof(int));
+    for (int i = 1; i <= 5; i++) {
+        deque_push_back(&d, &i);
+    }
+    deque_reverse(&d);
+    assert(deque_len(&d) == 5);
+    assert(*(int *)deque_at(&d, 0) == 5);
+    assert(*(int *)deque_at(&d, 1) == 4);
+    assert(*(int *)deque_at(&d, 2) == 3);
+    assert(*(int *)deque_at(&d, 3) == 2);
+    assert(*(int *)deque_at(&d, 4) == 1);
+    deque_free(&d);
+
+    deque_init(&d, sizeof(int));
+    for (int i = 1; i <= 6; i++) {
+        deque_push_back(&d, &i);
+    }
+    deque_reverse(&d);
+    assert(deque_len(&d) == 6);
+    assert(*(int *)deque_at(&d, 0) == 6);
+    assert(*(int *)deque_at(&d, 1) == 5);
+    assert(*(int *)deque_at(&d, 5) == 1);
+    deque_free(&d);
+
+    deque_init(&d, sizeof(int));
+    for (int i = 1; i <= 8; i++) {
+        deque_push_back(&d, &i);
+    }
+    for (int i = 0; i < 3; i++) {
+        deque_pop_front(&d, &out);
+    }
+    for (int i = 20; i <= 22; i++) {
+        deque_push_back(&d, &i);
+    }
+    deque_reverse(&d);
+    assert(deque_len(&d) == 8);
+    assert(*(int *)deque_at(&d, 0) == 22);
+    assert(*(int *)deque_at(&d, 1) == 21);
+    assert(*(int *)deque_at(&d, 7) == 4);
+    deque_free(&d);
+
     printf("test_deque: ok\n");
     return 0;
 }
