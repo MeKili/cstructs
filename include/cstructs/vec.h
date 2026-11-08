@@ -60,4 +60,7 @@ int vec_reserve(vec *v, size_t new_cap);
  * Returns 0 on success, -1 on allocation failure. */
 int vec_shrink_to_fit(vec *v);
 
+/* Swap elements at indices i and j. Returns 0 on success, -1 if either index is out of bounds. */
+int vec_swap(vec *v, size_t i, size_t j);
+
 #endif /* CSTRUCTS_VEC_H */

@@ -264,6 +264,51 @@ int main(void) {
 
     vec_free(&v);
 
+    /* Test vec_swap. */
+    vec_init(&v, sizeof(int));
+    for (int i = 0; i < 5; i++) {
+        assert(vec_push(&v, &i) == 0);
+    }
+    assert(vec_len(&v) == 5);
+
+    /* Swap two elements. */
+    assert(vec_swap(&v, 0, 4) == 0);
+    assert(*(int *)vec_at(&v, 0) == 4);
+    assert(*(int *)vec_at(&v, 4) == 0);
+    assert(*(int *)vec_at(&v, 1) == 1);
+    assert(*(int *)vec_at(&v, 2) == 2);
+    assert(*(int *)vec_at(&v, 3) == 3);
+
+    /* Swap adjacent elements. */
+    assert(vec_swap(&v, 1, 2) == 0);
+    assert(*(int *)vec_at(&v, 1) == 2);
+    assert(*(int *)vec_at(&v, 2) == 1);
+
+    /* Swap same index (no-op). */
+    assert(vec_swap(&v, 2, 2) == 0);
+    assert(*(int *)vec_at(&v, 2) == 1);
+
+    /* Invalid indices. */
+    assert(vec_swap(&v, 0, 5) == -1);
+    assert(vec_swap(&v, 5, 0) == -1);
+    assert(vec_swap(&v, 5, 5) == -1);
+    assert(vec_len(&v) == 5);
+
+    /* Verify state is unchanged after failed swaps. */
+    assert(*(int *)vec_at(&v, 0) == 4);
+    assert(*(int *)vec_at(&v, 4) == 0);
+
+    vec_free(&v);
+
+    /* Test swap on single element. */
+    vec_init(&v, sizeof(int));
+    int elem = 99;
+    assert(vec_push(&v, &elem) == 0);
+    assert(vec_swap(&v, 0, 0) == 0);
+    assert(*(int *)vec_at(&v, 0) == 99);
+
+    vec_free(&v);
+
     printf("test_vec: ok\n");
     return 0;
 }

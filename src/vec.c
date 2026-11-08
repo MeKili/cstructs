@@ -128,3 +128,21 @@ int vec_shrink_to_fit(vec *v) {
     v->cap = v->len;
     return 0;
 }
+
+int vec_swap(vec *v, size_t i, size_t j) {
+    if (i >= v->len || j >= v->len) {
+        return -1;
+    }
+    if (i == j) {
+        return 0;
+    }
+    unsigned char *tmp = malloc(v->elem_size);
+    if (tmp == NULL) {
+        return -1;
+    }
+    memcpy(tmp, v->data + i * v->elem_size, v->elem_size);
+    memcpy(v->data + i * v->elem_size, v->data + j * v->elem_size, v->elem_size);
+    memcpy(v->data + j * v->elem_size, tmp, v->elem_size);
+    free(tmp);
+    return 0;
+}
