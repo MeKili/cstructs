@@ -157,23 +157,17 @@ int main(void) {
             list_append(&l, &vals[i]);
         }
 
-        int gt25(const void *elem) {
-            return *(int *)elem > 25;
-        }
+        int gt25(const void *elem) { return *(int *)elem > 25; }
 
         size_t idx = list_find(&l, gt25);
         assert(idx == 2);
 
-        int even(const void *elem) {
-            return *(int *)elem % 2 == 0;
-        }
+        int even(const void *elem) { return *(int *)elem % 2 == 0; }
 
         idx = list_find(&l, even);
         assert(idx == 0);
 
-        int gt100(const void *elem) {
-            return *(int *)elem > 100;
-        }
+        int gt100(const void *elem) { return *(int *)elem > 100; }
 
         idx = list_find(&l, gt100);
         assert(idx == (size_t)-1);

@@ -63,4 +63,8 @@ int vec_shrink_to_fit(vec *v);
 /* Swap elements at indices i and j. Returns 0 on success, -1 if either index is out of bounds. */
 int vec_swap(vec *v, size_t i, size_t j);
 
+/* Find the index of the first element equal to `elem` according to `cmp`.
+ * Returns the index of the first matching element, or (size_t)-1 if not found. */
+size_t vec_index_of(const vec *v, const void *elem, int (*cmp)(const void *, const void *));
+
 #endif /* CSTRUCTS_VEC_H */

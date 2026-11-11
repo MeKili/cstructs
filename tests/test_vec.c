@@ -3,6 +3,12 @@
 #include <assert.h>
 #include <stdio.h>
 
+static int cmp_int(const void *a, const void *b) {
+    int val_a = *(const int *)a;
+    int val_b = *(const int *)b;
+    return val_a - val_b;
+}
+
 int main(void) {
     vec v;
     vec_init(&v, sizeof(int));
@@ -232,7 +238,7 @@ int main(void) {
         vec_pop(&v, &dummy);
     }
     assert(vec_len(&v) == 5);
-    assert(vec_capacity(&v) == cap_before);  /* Capacity unchanged. */
+    assert(vec_capacity(&v) == cap_before); /* Capacity unchanged. */
 
     /* Shrink to fit. */
     assert(vec_shrink_to_fit(&v) == 0);
@@ -306,6 +312,48 @@ int main(void) {
     assert(vec_push(&v, &elem) == 0);
     assert(vec_swap(&v, 0, 0) == 0);
     assert(*(int *)vec_at(&v, 0) == 99);
+
+    vec_free(&v);
+
+    /* Test vec_index_of. */
+    vec_init(&v, sizeof(int));
+    for (int i = 0; i < 10; i++) {
+        assert(vec_push(&v, &i) == 0);
+    }
+
+    /* Find element in the middle. */
+    int search_val = 5;
+    assert(vec_index_of(&v, &search_val, cmp_int) == 5);
+
+    /* Find first element. */
+    search_val = 0;
+    assert(vec_index_of(&v, &search_val, cmp_int) == 0);
+
+    /* Find last element. */
+    search_val = 9;
+    assert(vec_index_of(&v, &search_val, cmp_int) == 9);
+
+    /* Element not found. */
+    search_val = 100;
+    assert(vec_index_of(&v, &search_val, cmp_int) == (size_t)-1);
+
+    /* Negative search value. */
+    search_val = -5;
+    assert(vec_index_of(&v, &search_val, cmp_int) == (size_t)-1);
+
+    /* Test with duplicates (finds first). */
+    vec_clear(&v);
+    int vals[] = {1, 2, 3, 2, 4};
+    for (int i = 0; i < 5; i++) {
+        assert(vec_push(&v, &vals[i]) == 0);
+    }
+    search_val = 2;
+    assert(vec_index_of(&v, &search_val, cmp_int) == 1);
+
+    /* Test on empty vector. */
+    vec_clear(&v);
+    search_val = 0;
+    assert(vec_index_of(&v, &search_val, cmp_int) == (size_t)-1);
 
     vec_free(&v);
 

@@ -146,3 +146,12 @@ int vec_swap(vec *v, size_t i, size_t j) {
     free(tmp);
     return 0;
 }
+
+size_t vec_index_of(const vec *v, const void *elem, int (*cmp)(const void *, const void *)) {
+    for (size_t i = 0; i < v->len; i++) {
+        if (cmp(v->data + i * v->elem_size, elem) == 0) {
+            return i;
+        }
+    }
+    return (size_t)-1;
+}
