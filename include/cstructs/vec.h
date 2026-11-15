@@ -67,4 +67,7 @@ int vec_swap(vec *v, size_t i, size_t j);
  * Returns the index of the first matching element, or (size_t)-1 if not found. */
 size_t vec_index_of(const vec *v, const void *elem, int (*cmp)(const void *, const void *));
 
+/* Sort elements in-place using merge sort. Returns 0 on success, -1 on allocation failure. */
+int vec_sort(vec *v, int (*cmp)(const void *, const void *));
+
 #endif /* CSTRUCTS_VEC_H */

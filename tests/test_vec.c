@@ -357,6 +357,79 @@ int main(void) {
 
     vec_free(&v);
 
+    /* Test vec_sort. */
+    vec_init(&v, sizeof(int));
+
+    /* Sort with unsorted elements. */
+    int unsorted[] = {5, 2, 8, 1, 9, 3};
+    for (int i = 0; i < 6; i++) {
+        assert(vec_push(&v, &unsorted[i]) == 0);
+    }
+    assert(vec_sort(&v, cmp_int) == 0);
+    assert(vec_len(&v) == 6);
+    assert(*(int *)vec_at(&v, 0) == 1);
+    assert(*(int *)vec_at(&v, 1) == 2);
+    assert(*(int *)vec_at(&v, 2) == 3);
+    assert(*(int *)vec_at(&v, 3) == 5);
+    assert(*(int *)vec_at(&v, 4) == 8);
+    assert(*(int *)vec_at(&v, 5) == 9);
+
+    /* Sort with duplicates. */
+    vec_clear(&v);
+    int dups[] = {3, 1, 4, 1, 5, 9, 2, 6, 5};
+    for (int i = 0; i < 9; i++) {
+        assert(vec_push(&v, &dups[i]) == 0);
+    }
+    assert(vec_sort(&v, cmp_int) == 0);
+    assert(vec_len(&v) == 9);
+    assert(*(int *)vec_at(&v, 0) == 1);
+    assert(*(int *)vec_at(&v, 1) == 1);
+    assert(*(int *)vec_at(&v, 2) == 2);
+    assert(*(int *)vec_at(&v, 3) == 3);
+    assert(*(int *)vec_at(&v, 4) == 4);
+    assert(*(int *)vec_at(&v, 5) == 5);
+    assert(*(int *)vec_at(&v, 6) == 5);
+    assert(*(int *)vec_at(&v, 7) == 6);
+    assert(*(int *)vec_at(&v, 8) == 9);
+
+    /* Sort already sorted (no-op in terms of order). */
+    vec_clear(&v);
+    int sorted[] = {1, 2, 3, 4, 5};
+    for (int i = 0; i < 5; i++) {
+        assert(vec_push(&v, &sorted[i]) == 0);
+    }
+    assert(vec_sort(&v, cmp_int) == 0);
+    assert(vec_len(&v) == 5);
+    for (int i = 0; i < 5; i++) {
+        assert(*(int *)vec_at(&v, i) == i + 1);
+    }
+
+    /* Sort reverse sorted. */
+    vec_clear(&v);
+    int rev[] = {5, 4, 3, 2, 1};
+    for (int i = 0; i < 5; i++) {
+        assert(vec_push(&v, &rev[i]) == 0);
+    }
+    assert(vec_sort(&v, cmp_int) == 0);
+    assert(vec_len(&v) == 5);
+    for (int i = 0; i < 5; i++) {
+        assert(*(int *)vec_at(&v, i) == i + 1);
+    }
+
+    /* Sort single element (no-op). */
+    vec_clear(&v);
+    elem = 42;
+    assert(vec_push(&v, &elem) == 0);
+    assert(vec_sort(&v, cmp_int) == 0);
+    assert(*(int *)vec_at(&v, 0) == 42);
+
+    /* Sort empty vector (no-op). */
+    vec_clear(&v);
+    assert(vec_sort(&v, cmp_int) == 0);
+    assert(vec_len(&v) == 0);
+
+    vec_free(&v);
+
     printf("test_vec: ok\n");
     return 0;
 }

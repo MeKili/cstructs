@@ -1,4 +1,5 @@
 #include "../include/cstructs/vec.h"
+#include "../include/cstructs/sort.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -154,4 +155,8 @@ size_t vec_index_of(const vec *v, const void *elem, int (*cmp)(const void *, con
         }
     }
     return (size_t)-1;
+}
+
+int vec_sort(vec *v, int (*cmp)(const void *, const void *)) {
+    return sort_merge(v->data, v->len, v->elem_size, cmp);
 }
