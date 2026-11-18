@@ -74,7 +74,7 @@ void *list_at(const list *l, size_t i) {
 
 size_t list_len(const list *l) { return l->len; }
 
-void list_free(list *l) {
+void list_clear(list *l) {
     list_node *curr = l->head;
     while (curr) {
         list_node *next = curr->next;
@@ -84,6 +84,10 @@ void list_free(list *l) {
     }
     l->head = NULL;
     l->len = 0;
+}
+
+void list_free(list *l) {
+    list_clear(l);
 }
 
 void list_reverse(list *l) {

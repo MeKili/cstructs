@@ -175,6 +175,28 @@ int main(void) {
         list_free(&l);
     }
 
+    /* Test clear. */
+    {
+        list l;
+        list_init(&l, sizeof(int));
+
+        int vals[] = {1, 2, 3, 4, 5};
+        for (int i = 0; i < 5; i++) {
+            list_append(&l, &vals[i]);
+        }
+
+        assert(list_len(&l) == 5);
+        list_clear(&l);
+        assert(list_len(&l) == 0);
+
+        int val = 99;
+        assert(list_append(&l, &val) == 0);
+        assert(list_len(&l) == 1);
+        assert(*(int *)list_at(&l, 0) == 99);
+
+        list_free(&l);
+    }
+
     printf("test_list: ok\n");
     return 0;
 }

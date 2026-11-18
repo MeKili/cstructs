@@ -45,4 +45,7 @@ void list_reverse(list *l);
  * Returns the index of the first matching element, or (size_t)-1 if not found. */
 size_t list_find(const list *l, int (*predicate)(const void *elem));
 
+/* Clear all elements without freeing the list structure itself. */
+void list_clear(list *l);
+
 #endif /* CSTRUCTS_LIST_H */
