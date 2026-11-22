@@ -48,4 +48,8 @@ size_t list_find(const list *l, int (*predicate)(const void *elem));
 /* Clear all elements without freeing the list structure itself. */
 void list_clear(list *l);
 
+/* Find the index of the first element equal to `elem` according to `cmp`.
+ * Returns the index of the first matching element, or (size_t)-1 if not found. */
+size_t list_index_of(const list *l, const void *elem, int (*cmp)(const void *, const void *));
+
 #endif /* CSTRUCTS_LIST_H */

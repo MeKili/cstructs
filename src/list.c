@@ -111,3 +111,13 @@ size_t list_find(const list *l, int (*predicate)(const void *elem)) {
     }
     return (size_t)-1;
 }
+
+size_t list_index_of(const list *l, const void *elem, int (*cmp)(const void *, const void *)) {
+    list_node *curr = l->head;
+    for (size_t i = 0; curr; curr = curr->next, i++) {
+        if (cmp(curr->data, elem) == 0) {
+            return i;
+        }
+    }
+    return (size_t)-1;
+}

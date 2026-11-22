@@ -197,6 +197,37 @@ int main(void) {
         list_free(&l);
     }
 
+    /* Test index_of. */
+    {
+        list l;
+        list_init(&l, sizeof(int));
+
+        int vals[] = {10, 20, 30, 40, 50};
+        for (int i = 0; i < 5; i++) {
+            list_append(&l, &vals[i]);
+        }
+
+        int cmp_int(const void *a, const void *b) { return *(int *)a - *(int *)b; }
+
+        int search = 30;
+        size_t idx = list_index_of(&l, &search, cmp_int);
+        assert(idx == 2);
+
+        search = 10;
+        idx = list_index_of(&l, &search, cmp_int);
+        assert(idx == 0);
+
+        search = 50;
+        idx = list_index_of(&l, &search, cmp_int);
+        assert(idx == 4);
+
+        search = 99;
+        idx = list_index_of(&l, &search, cmp_int);
+        assert(idx == (size_t)-1);
+
+        list_free(&l);
+    }
+
     printf("test_list: ok\n");
     return 0;
 }
