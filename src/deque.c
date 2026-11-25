@@ -95,6 +95,14 @@ void deque_reverse(deque *d) {
     free(tmp);
 }
 
+size_t deque_index_of(const deque *d, const void *elem, int (*cmp)(const void *, const void *)) {
+    for (size_t i = 0; i < d->len; i++) {
+        if (cmp(deque_at(d, i), elem) == 0)
+            return i;
+    }
+    return (size_t)-1;
+}
+
 void deque_free(deque *d) {
     free(d->data);
     d->data = NULL;

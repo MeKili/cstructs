@@ -3,6 +3,12 @@
 #include <stdio.h>
 #include <string.h>
 
+static int int_cmp(const void *a, const void *b) {
+    int va = *(int *)a;
+    int vb = *(int *)b;
+    return va - vb;
+}
+
 int main(void) {
     deque d;
     deque_init(&d, sizeof(int));
@@ -180,6 +186,52 @@ int main(void) {
     assert(*(int *)deque_at(&d, 0) == 22);
     assert(*(int *)deque_at(&d, 1) == 21);
     assert(*(int *)deque_at(&d, 7) == 4);
+    deque_free(&d);
+
+    deque_init(&d, sizeof(int));
+    int search_val = 5;
+    assert(deque_index_of(&d, &search_val, int_cmp) == (size_t)-1);
+    deque_free(&d);
+
+    deque_init(&d, sizeof(int));
+    int single_val = 42;
+    deque_push_back(&d, &single_val);
+    assert(deque_index_of(&d, &single_val, int_cmp) == 0);
+    int not_found = 100;
+    assert(deque_index_of(&d, &not_found, int_cmp) == (size_t)-1);
+    deque_free(&d);
+
+    deque_init(&d, sizeof(int));
+    for (int i = 1; i <= 10; i++) {
+        deque_push_back(&d, &i);
+    }
+    int search = 1;
+    assert(deque_index_of(&d, &search, int_cmp) == 0);
+    search = 10;
+    assert(deque_index_of(&d, &search, int_cmp) == 9);
+    search = 5;
+    assert(deque_index_of(&d, &search, int_cmp) == 4);
+    search = 100;
+    assert(deque_index_of(&d, &search, int_cmp) == (size_t)-1);
+    deque_free(&d);
+
+    deque_init(&d, sizeof(int));
+    int values[] = {1, 2, 2, 3, 2, 4};
+    for (size_t i = 0; i < 6; i++) {
+        deque_push_back(&d, &values[i]);
+    }
+    int dup_search = 2;
+    assert(deque_index_of(&d, &dup_search, int_cmp) == 1);
+    deque_free(&d);
+
+    deque_init(&d, sizeof(int));
+    for (int i = 1; i <= 5; i++) {
+        deque_push_front(&d, &i);
+    }
+    int front_search = 5;
+    assert(deque_index_of(&d, &front_search, int_cmp) == 0);
+    front_search = 1;
+    assert(deque_index_of(&d, &front_search, int_cmp) == 4);
     deque_free(&d);
 
     printf("test_deque: ok\n");

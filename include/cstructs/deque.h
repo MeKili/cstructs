@@ -42,6 +42,10 @@ void deque_clear(deque *d);
 /* Reverse the order of all elements in the deque. */
 void deque_reverse(deque *d);
 
+/* Find the index of the first element equal to `elem` according to `cmp`.
+ * Returns the index of the first matching element, or (size_t)-1 if not found. */
+size_t deque_index_of(const deque *d, const void *elem, int (*cmp)(const void *, const void *));
+
 /* Free the deque's storage and reset it to the empty state. */
 void deque_free(deque *d);
 
